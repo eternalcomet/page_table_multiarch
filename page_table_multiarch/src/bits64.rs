@@ -459,7 +459,7 @@ impl<M: PagingMetaData, PTE: GenericPTE, H: PagingHandler> PageTable64<M, PTE, H
         }
     }
 
-    fn get_entry(&self, vaddr: M::VirtAddr) -> PagingResult<(&PTE, PageSize)> {
+    pub fn get_entry(&self, vaddr: M::VirtAddr) -> PagingResult<(&PTE, PageSize)> {
         let vaddr: usize = vaddr.into();
         let p3 = if M::LEVELS == 3 {
             self.table_of(self.root_paddr())
