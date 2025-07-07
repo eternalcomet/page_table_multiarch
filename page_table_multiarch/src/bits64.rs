@@ -63,7 +63,9 @@ impl<M: PagingMetaData, PTE: GenericPTE, H: PagingHandler> PageTable64<M, PTE, H
         page_size: PageSize,
         flags: MappingFlags,
     ) -> PagingResult<TlbFlush<M>> {
-        trace!("[page table] va: {:#x}, pa: {:#x}, size: {:?}, flags: {:?}", vaddr.as_usize(), target.as_usize(), page_size, flags);
+        let vaddr_usize: usize = vaddr.into();
+        let paddr_usize: usize = target.into();
+        trace!("[page table] va: {:#x}, pa: {:#x}, size: {:?}, flags: {:?}", vaddr_usize, paddr_usize, page_size, flags);
         let entry = self.get_entry_mut_or_create(vaddr, page_size)?;
         if !entry.is_unused() {
             return Err(PagingError::AlreadyMapped);
